@@ -1,30 +1,12 @@
-@extends('layouts.app')
-
+@extends('layout')
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
-
-                <div class="card-body">
-                    @if (session('status'))
-                    <div class="alert alert-success" role="alert">
-                        {{ session('status') }}
-                    </div>
-                    @endif
-
-                    {{ __('You are logged in!') }}
-                </div>
-            </div>
-        </div>
-    </div>
+<div class="container py-5">
     <div class="row">
         <div class="col-lg-10 mx-auto">
             <div class="bg-white rounded-lg shadow-sm p-5">
                 <div class="tab-content">
                     <div id="nav-tab-card" class="tab-pane fade show active">
-                        <h3>Liste des posts</h3>
+                        <h3>Liste des commentaires</h3>
                         @if(session()->get('success'))
                         <div class="alert alert-success">
                             {{ session()->get('success') }}
@@ -41,25 +23,20 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($posts as $post)
+                                @foreach($comment as $comment)
                                 <tr>
-                                    <th scope="row">{{$post->id}}</th>
-                                    <td>{{$post->content}}</td>
-                                    <td>{{$post->tags}}</td>
-                                    <td>{{$post->image}}</td>
+                                    <th scope="row">{{$comment->id}}</th>
+                                    <td>{{$comment->content}}</td>
+                                    <td>{{$comment->tags}}</td>
+                                    <td>{{$comment->image}}</td>
                                     <td>
-                                        <a href="{{ route('post.edit', $post->id)}}" class="btn btn-primary btn-sm mb-4">Editer</a>
-                                        <form action="{{ route('post.destroy', $post->id)}}" method="POST" style="display: inline-block">
+                                        <a href="{{ route('comment.edit', $comment->id)}}" class="btn btn-primary btn-sm mb-4">Editer</a>
+                                        <form action="{{ route('comment.destroy', $comment->id)}}" method="POST" style="display: inline-block">
                                             @csrf
                                             @method('DELETE')
                                             <button class="btn btn-danger btn-sm" type=" submit">Supprimer</button>
                                     </td>
                                 </tr>
-                                @foreach($post->comments as $comment)
-                                <tr>
-                                    <td>{{$comment->content}}</td>
-                                </tr>
-                                @endforeach
                                 @endforeach
                             </tbody>
                         </table>

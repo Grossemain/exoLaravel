@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Post;
+use App\Models\Comment;
 
 class HomeController extends Controller
 {
@@ -23,6 +25,14 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        //$post = Post::all();
+        $posts = Post::latest()->paginate(10);
+        $comments = Comment::all();
+       // return view('home', compact('post','comment'));
+
+        return view("home", [
+            'posts' => $posts,
+            'comments' => $comments
+        ]);
     }
 }
